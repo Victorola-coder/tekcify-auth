@@ -1,12 +1,12 @@
 "use client";
 
-import { useAuth } from "@/app/lib/auth-context";
-import { Button } from "@/app/components/ui";
-import { Animation } from "@/app/components/global";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { toast } from "sonner";
 import Link from "next/link";
+import { toast } from "sonner";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/app/components/ui";
+import { useAuth } from "@/app/lib/auth-context";
+import { Animation } from "@/app/components/global";
 
 export default function LoginPage() {
   const { user, loading, login } = useAuth();

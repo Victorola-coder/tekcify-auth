@@ -1,21 +1,21 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/lib/auth-context";
 import { Animation } from "@/app/components/global";
 import { Image, Button } from "@/app/components/ui";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 export default function Profile() {
   const { user, loading, logout } = useAuth();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (!loading && !user) {
-  //     router.push("/auth/login");
-  //   }
-  // }, [user, loading, router]);
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [user, loading, router]);
 
   if (loading) {
     return (

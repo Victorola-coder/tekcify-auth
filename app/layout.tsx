@@ -30,7 +30,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://tekcify-auth.vercel.app"),
   icons: {
-    icon: "/images/logo.svg",
+    icon: "/images/logo.jpg",
   },
   title: "Tekcify Auth - Next.js Authentication System",
   description:

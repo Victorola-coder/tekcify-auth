@@ -10,20 +10,20 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       return NextResponse.redirect(
-        new URL(`/auth/error?error=${error}`, request.url)
+        new URL(`/error?error=${error}`, request.url)
       );
     }
 
     if (!code) {
       return NextResponse.redirect(
-        new URL("/auth/error?error=no_code", request.url)
+        new URL("/error?error=no_code", request.url)
       );
     }
 
     const storedState = request.cookies.get("tekcify_state")?.value;
     if (state !== storedState) {
       return NextResponse.redirect(
-        new URL("/auth/error?error=invalid_state", request.url)
+        new URL("/error?error=invalid_state", request.url)
       );
     }
 
@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Callback error:", error);
     return NextResponse.redirect(
-      new URL("/auth/error?error=callback_failed", request.url)
+      new URL("/error?error=callback_failed", request.url)
     );
   }
 }

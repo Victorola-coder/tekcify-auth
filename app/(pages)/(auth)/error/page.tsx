@@ -1,26 +1,26 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { Button } from "@/app/components/ui";
-import { Animation } from "@/app/components/global";
 import Link from "next/link";
+import { Button } from "@/app/components/ui";
+import { useSearchParams } from "next/navigation";
+import { Animation } from "@/app/components/global";
 
 export default function AuthErrorPage() {
   const searchParams = useSearchParams();
-  const error = searchParams.get('error');
+  const error = searchParams.get("error");
 
   const getErrorMessage = (errorCode: string | null) => {
     switch (errorCode) {
-      case 'access_denied':
-        return 'Access was denied. Please try again.';
-      case 'invalid_state':
-        return 'Invalid authentication state. Please try again.';
-      case 'no_code':
-        return 'No authorization code received. Please try again.';
-      case 'callback_failed':
-        return 'Authentication callback failed. Please try again.';
+      case "access_denied":
+        return "Access was denied. Please try again.";
+      case "invalid_state":
+        return "Invalid authentication state. Please try again.";
+      case "no_code":
+        return "No authorization code received. Please try again.";
+      case "callback_failed":
+        return "Authentication callback failed. Please try again.";
       default:
-        return 'An unexpected error occurred during authentication.';
+        return "An unexpected error occurred during authentication.";
     }
   };
 
@@ -44,7 +44,7 @@ export default function AuthErrorPage() {
                   Try Again
                 </Button>
               </Link>
-              
+
               <Link href="/">
                 <Button className="w-full" variant="secondary">
                   Go Home
@@ -57,7 +57,10 @@ export default function AuthErrorPage() {
                 <p className="text-[#FFFFFF60] text-xs">
                   If this problem persists, please contact support
                 </p>
-                <Link href="/auth/login" className="text-[#FFFFFF60] text-xs hover:text-white">
+                <Link
+                  href="/auth/login"
+                  className="text-[#FFFFFF60] text-xs hover:text-white"
+                >
                   ← Back to Login
                 </Link>
               </div>
