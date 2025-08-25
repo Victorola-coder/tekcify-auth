@@ -12,12 +12,7 @@ if (!process.env.TEKCIFY_CLIENT_SECRET) {
 
 export const tekcifyClient = new Tekcify(
   process.env.TEKCIFY_CLIENT_ID,
-  process.env.TEKCIFY_CLIENT_SECRET,
-  {
-    authorizationEndpoint: "https://auth.tekcify.com/auth/authorize",
-    tokenEndpoint: "https://auth.tekcify.com/auth/token",
-    userInfoEndpoint: "https://auth.tekcify.com/auth/userinfo",
-  }
+  process.env.TEKCIFY_CLIENT_SECRET
 );
 
 export const TEKCIFY_CONFIG = {
