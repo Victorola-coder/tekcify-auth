@@ -1,42 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useAuth } from "@/app/lib/auth-context";
-import { Animation, Glow } from "@/app/components/global";
-import {
-  Tabs,
-  Select,
-  TextArea,
-  Toggle,
-  Image,
-  Button,
-} from "@/app/components/ui";
+import { Animation } from "@/app/components/global";
+import { Image, Button } from "@/app/components/ui";
 import { useRouter } from "next/navigation";
-
-const profileTabs = [
-  { label: "General", value: "general" },
-  { label: "Security", value: "security" },
-  { label: "Preferences", value: "preferences" },
-];
-
-const themeOptions = [
-  { label: "System", value: "system" },
-  { label: "Light", value: "light" },
-  { label: "Dark", value: "dark" },
-];
+import Link from "next/link";
 
 export default function Profile() {
   const { user, loading, logout } = useAuth();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("general");
-  const [notifications, setNotifications] = useState(true);
-  const [bio, setBio] = useState("");
 
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push("/auth/login");
-    }
-  }, [user, loading, router]);
+  // useEffect(() => {
+  //   if (!loading && !user) {
+  //     router.push("/auth/login");
+  //   }
+  // }, [user, loading, router]);
 
   if (loading) {
     return (
@@ -54,73 +33,64 @@ export default function Profile() {
 
   return (
     <Animation>
-      <div className="min-h-screen p-4 md:p-8">
-        <div className="max-w-4xl mx-auto">
-          <Glow className="p-6">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-6">
-                <Image
-                  src={user.picture || "/avatar-placeholder.png"}
-                  alt="Profile"
-                  width={100}
-                  height={100}
-                  className="rounded-full"
-                />
-                <div>
-                  <h1 className="text-2xl font-geistSans font-bold">
-                    {user.name}
-                  </h1>
-                  <p className="text-[#FFFFFF80]">{user.email}</p>
-                </div>
-              </div>
-              <Button onClick={logout} variant="danger">
-                Logout
-              </Button>
+      <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="text-center space-y-8">
+            <div>
+              <h1 className="text-4xl font-geistSans font-bold text-white mb-4">
+                Profile
+              </h1>
+              <p className="text-[#FFFFFF80] text-lg">
+                Your account information
+              </p>
             </div>
-
-            <Tabs
-              tabs={profileTabs}
-              onChange={setActiveTab}
-              defaultValue="general"
-              className="mb-8"
-            />
 
             <div className="space-y-6">
-              {activeTab === "general" && (
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm mb-2">Bio</label>
-                    <TextArea
-                      name="bio"
-                      value={bio}
-                      onChange={(e) => setBio(e.target.value)}
-                      placeholder="Tell us about yourself..."
-                    />
+              <div className="bg-[#283142] p-8 rounded-lg">
+                <div className="flex flex-col items-center gap-6">
+                  <Image
+                    src={user.picture || "/images/logo.svg"}
+                    alt="Profile"
+                    width={120}
+                    height={120}
+                    className="rounded-full border-4 border-[#FFFFFF20]"
+                  />
+                  <div className="text-center">
+                    <h2 className="text-2xl font-semibold text-white mb-2">
+                      {user.name}
+                    </h2>
+                    <p className="text-[#FFFFFF80] text-lg">{user.email}</p>
                   </div>
                 </div>
-              )}
+              </div>
 
-              {activeTab === "preferences" && (
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm mb-2">Theme</label>
-                    <Select
-                      options={themeOptions}
-                      defaultValue="system"
-                      onChange={(value) => console.log(value)}
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm">Enable Notifications</label>
-                    <Toggle
-                      checked={notifications}
-                      onChange={setNotifications}
-                    />
-                  </div>
-                </div>
-              )}
+              <div className="space-y-4">
+                <Button
+                  onClick={logout}
+                  variant="danger"
+                  className="w-full text-lg py-4"
+                  size="lg"
+                >
+                  Sign Out
+                </Button>
+
+                <Link href="/">
+                  <Button variant="secondary" className="w-full">
+                    Back to Home
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </Glow>
+
+            <div className="pt-8 border-t border-[#FFFFFF20]">
+              <div className="space-y-4">
+                <p className="text-[#FFFFFF60] text-xs">
+                  Account managed by Tekcify
+                </p>
+                <p className="text-[#FFFFFF60] text-xs">User ID: {user.id}</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </Animation>

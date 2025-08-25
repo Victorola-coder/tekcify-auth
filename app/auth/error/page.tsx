@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/app/components/ui";
-import { Animation, Glow } from "@/app/components/global";
+import { Animation } from "@/app/components/global";
 import Link from "next/link";
 
 export default function AuthErrorPage() {
@@ -26,21 +26,21 @@ export default function AuthErrorPage() {
 
   return (
     <Animation>
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <Glow className="max-w-md w-full p-8">
-          <div className="text-center space-y-6">
+      <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="text-center space-y-8">
             <div>
-              <h1 className="text-3xl font-geistSans font-bold text-white mb-2">
+              <h1 className="text-4xl font-geistSans font-bold text-white mb-4">
                 Authentication Error
               </h1>
-              <p className="text-[#FFFFFF80]">
+              <p className="text-[#FFFFFF80] text-lg">
                 {getErrorMessage(error)}
               </p>
             </div>
 
             <div className="space-y-4">
               <Link href="/auth/login">
-                <Button className="w-full" variant="primary">
+                <Button className="w-full text-lg py-4" variant="primary">
                   Try Again
                 </Button>
               </Link>
@@ -52,13 +52,18 @@ export default function AuthErrorPage() {
               </Link>
             </div>
 
-            <div className="pt-6 border-t border-[#FFFFFF20]">
-              <p className="text-[#FFFFFF60] text-xs">
-                If this problem persists, please contact support
-              </p>
+            <div className="pt-8 border-t border-[#FFFFFF20]">
+              <div className="space-y-4">
+                <p className="text-[#FFFFFF60] text-xs">
+                  If this problem persists, please contact support
+                </p>
+                <Link href="/auth/login" className="text-[#FFFFFF60] text-xs hover:text-white">
+                  ← Back to Login
+                </Link>
+              </div>
             </div>
           </div>
-        </Glow>
+        </div>
       </div>
     </Animation>
   );

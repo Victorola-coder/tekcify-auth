@@ -1,116 +1,94 @@
 "use client";
 
-import { toast } from "sonner";
-import { useState } from "react";
+import { useAuth } from "@/app/lib/auth-context";
+import { Button } from "@/app/components/ui";
+import { Animation } from "@/app/components/global";
 import { useRouter } from "next/navigation";
-import { Button, Input, Otp } from "@/app/components/ui";
-import { Animation, Glow } from "@/app/components/global";
-import { signupSchema, type SignupFormData } from "@/app/lib/validations/auth";
+import { useEffect } from "react";
+import { toast } from "sonner";
+import Link from "next/link";
 
 export default function SignUp() {
+  const { user, loading, login } = useAuth();
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [showOtp, setShowOtp] = useState(false);
-  const [formData, setFormData] = useState<SignupFormData>({
-    firstName: "",
-    lastName: "",
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  useEffect(() => {
+    if (user && !loading) {
+      router.push("/profile");
+    }
+  }, [user, loading, router]);
 
+  const handleSignup = async () => {
     try {
-      const validatedData = signupSchema.parse(formData);
-      // Here you would make your API call
-      setShowOtp(true);
+      await login();
     } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      }
-    } finally {
-      setLoading(false);
+      toast.error("Failed to start signup process");
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  if (loading) {
+    return (
+      <Animation>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-white">Loading...</div>
+        </div>
+      </Animation>
+    );
+  }
 
   return (
     <Animation>
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <Glow className="max-w-md w-full p-6">
-          <h1 className="text-2xl font-geistSans font-bold mb-6">
-            Create your account
-          </h1>
-
-          {!showOtp ? (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <Input
-                  placeholder="First Name"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                />
-                <Input
-                  name="lastName"
-                  placeholder="Last Name"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                />
-              </div>
-              <Input
-                name="username"
-                placeholder="Username"
-                value={formData.username}
-                onChange={handleChange}
-              />
-              <Input
-                name="email"
-                type="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-              <Input
-                name="password"
-                type="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-              <Input
-                name="confirmPassword"
-                type="password"
-                placeholder="Confirm Password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-              <Button
-                type="submit"
-                loading={loading}
-                className="w-full"
-                variant="primary"
-              >
-                Sign Up
-              </Button>
-            </form>
-          ) : (
-            <div className="space-y-4">
-              <p className="text-center text-[#FFFFFF80]">
-                Enter the verification code sent to your email
+      <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="text-center space-y-8">
+            <div>
+              <h1 className="text-4xl font-geistSans font-bold text-white mb-4">
+                Create Account
+              </h1>
+              <p className="text-[#FFFFFF80] text-lg">
+                Sign up with Tekcify to get started
               </p>
-              <Otp />
             </div>
-          )}
-        </Glow>
+
+            <div className="space-y-6">
+              <Button
+                onClick={handleSignup}
+                className="w-full text-lg py-4"
+                variant="primary"
+                size="lg"
+              >
+                Sign up with Tekcify
+              </Button>
+
+              <div className="text-center">
+                <p className="text-[#FFFFFF60] text-sm">
+                  Already have an account?{" "}
+                  <Link
+                    href="/auth/login"
+                    className="text-primary hover:underline"
+                  >
+                    Sign in here
+                  </Link>
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-8 border-t border-[#FFFFFF20]">
+              <div className="space-y-4">
+                <p className="text-[#FFFFFF60] text-xs">
+                  By continuing, you agree to our Terms of Service and Privacy
+                  Policy
+                </p>
+                <Link
+                  href="/"
+                  className="text-[#FFFFFF60] text-xs hover:text-white"
+                >
+                  ← Back to Home
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </Animation>
   );

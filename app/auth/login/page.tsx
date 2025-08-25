@@ -1,11 +1,12 @@
 "use client";
 
 import { useAuth } from "@/app/lib/auth-context";
-import { Button, Card } from "@/app/components/ui";
-import { Animation, Glow } from "@/app/components/global";
+import { Button } from "@/app/components/ui";
+import { Animation } from "@/app/components/global";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export default function LoginPage() {
   const { user, loading, login } = useAuth();
@@ -13,7 +14,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user && !loading) {
-      router.push('/profile');
+      router.push("/profile");
     }
   }, [user, loading, router]);
 
@@ -21,7 +22,7 @@ export default function LoginPage() {
     try {
       await login();
     } catch (error) {
-      toast.error('Failed to start login process');
+      toast.error("Failed to start login process");
     }
   };
 
@@ -37,28 +38,28 @@ export default function LoginPage() {
 
   return (
     <Animation>
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <Glow className="max-w-md w-full p-8">
-          <div className="text-center space-y-6">
+      <div className="min-h-screen bg-[#0f0f0f] flex items-center justify-center p-4">
+        <div className="max-w-md w-full">
+          <div className="text-center space-y-8">
             <div>
-              <h1 className="text-3xl font-geistSans font-bold text-white mb-2">
+              <h1 className="text-4xl font-geistSans font-bold text-white mb-4">
                 Welcome Back
               </h1>
-              <p className="text-[#FFFFFF80]">
+              <p className="text-[#FFFFFF80] text-lg">
                 Sign in to your account to continue
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
               <Button
                 onClick={handleLogin}
-                className="w-full"
+                className="w-full text-lg py-4"
                 variant="primary"
                 size="lg"
               >
                 Continue with Tekcify
               </Button>
-              
+
               <div className="text-center">
                 <p className="text-[#FFFFFF60] text-sm">
                   Don't have an account?{" "}
@@ -72,13 +73,22 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="pt-6 border-t border-[#FFFFFF20]">
-              <p className="text-[#FFFFFF60] text-xs">
-                By continuing, you agree to our Terms of Service and Privacy Policy
-              </p>
+            <div className="pt-8 border-t border-[#FFFFFF20]">
+              <div className="space-y-4">
+                <p className="text-[#FFFFFF60] text-xs">
+                  By continuing, you agree to our Terms of Service and Privacy
+                  Policy
+                </p>
+                <Link
+                  href="/"
+                  className="text-[#FFFFFF60] text-xs hover:text-white"
+                >
+                  ← Back to Home
+                </Link>
+              </div>
             </div>
           </div>
-        </Glow>
+        </div>
       </div>
     </Animation>
   );
