@@ -39,7 +39,7 @@ export default function AuthErrorPage() {
             </div>
 
             <div className="space-y-4">
-              <Link href="/auth/login">
+              <Link href="/login">
                 <Button className="w-full text-lg py-4" variant="primary">
                   Try Again
                 </Button>
@@ -58,7 +58,7 @@ export default function AuthErrorPage() {
                   If this problem persists, please contact support
                 </p>
                 <Link
-                  href="/auth/login"
+                  href="/login"
                   className="text-[#FFFFFF60] text-xs hover:text-white"
                 >
                   ← Back to Login
