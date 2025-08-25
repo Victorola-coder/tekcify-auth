@@ -1,8 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/app/lib/auth-context";
 import { Animation, Glow } from "@/app/components/global";
-import { Tabs, Select, TextArea, Toggle, Image } from "@/app/components/ui";
+import {
+  Tabs,
+  Select,
+  TextArea,
+  Toggle,
+  Image,
+  Button,
+} from "@/app/components/ui";
+import { useRouter } from "next/navigation";
 
 const profileTabs = [
   { label: "General", value: "general" },
@@ -17,27 +26,56 @@ const themeOptions = [
 ];
 
 export default function Profile() {
+  const { user, loading, logout } = useAuth();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("general");
   const [notifications, setNotifications] = useState(true);
   const [bio, setBio] = useState("");
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/auth/login");
+    }
+  }, [user, loading, router]);
+
+  if (loading) {
+    return (
+      <Animation>
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-white">Loading...</div>
+        </div>
+      </Animation>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <Animation>
       <div className="min-h-screen p-4 md:p-8">
         <div className="max-w-4xl mx-auto">
           <Glow className="p-6">
-            <div className="flex items-center gap-6 mb-8">
-              <Image
-                src="/avatar-placeholder.png"
-                alt="Profile"
-                width={100}
-                height={100}
-                className="rounded-full"
-              />
-              <div>
-                <h1 className="text-2xl font-geistSans font-bold">John Doe</h1>
-                <p className="text-[#FFFFFF80]">@johndoe</p>
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-6">
+                <Image
+                  src={user.picture || "/avatar-placeholder.png"}
+                  alt="Profile"
+                  width={100}
+                  height={100}
+                  className="rounded-full"
+                />
+                <div>
+                  <h1 className="text-2xl font-geistSans font-bold">
+                    {user.name}
+                  </h1>
+                  <p className="text-[#FFFFFF80]">{user.email}</p>
+                </div>
               </div>
+              <Button onClick={logout} variant="danger">
+                Logout
+              </Button>
             </div>
 
             <Tabs

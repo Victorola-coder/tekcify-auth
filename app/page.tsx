@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "./lib/auth-context";
 import {
   Button,
   Card,
@@ -18,24 +19,10 @@ import { motion } from "framer-motion";
 import { EyeIcon } from "./components/svgs";
 import { toast } from "sonner";
 import { Animation, Glow, Loader } from "./components/global";
+import Link from "next/link";
 
 export default function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [toggleState, setToggleState] = useState(false);
-  const [inputValue, setInputValue] = useState("");
-  const [textAreaValue, setTextAreaValue] = useState("");
-
-  const tabs = [
-    { label: "Overview", value: "overview" },
-    { label: "Components", value: "components" },
-    { label: "Settings", value: "settings" },
-  ];
-
-  const selectOptions = [
-    { label: "Option 1", value: "1" },
-    { label: "Option 2", value: "2" },
-    { label: "Option 3", value: "3" },
-  ];
+  const { user, loading, login } = useAuth();
 
   return (
     <Animation>
@@ -59,22 +46,39 @@ export default function Home() {
             </motion.div>
 
             <div className="flex gap-4 justify-center">
-              <Button
-                variant="primary"
-                onClick={() => toast.success("Copied to clipboard!")}
-              >
-                Get Started
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={() =>
-                  window.open(
-                    "https://github.com/victorola-coder/next-template"
-                  )
-                }
-              >
-                View on GitHub
-              </Button>
+              {user ? (
+                <>
+                  <Link href="/profile">
+                    <Button variant="primary">View Profile</Button>
+                  </Link>
+                  <Button
+                    variant="secondary"
+                    onClick={() =>
+                      window.open(
+                        "https://github.com/victorola-coder/next-template"
+                      )
+                    }
+                  >
+                    View on GitHub
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="primary" onClick={login}>
+                    Get Started with Tekcify
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() =>
+                      window.open(
+                        "https://github.com/victorola-coder/next-template"
+                      )
+                    }
+                  >
+                    View on GitHub
+                  </Button>
+                </>
+              )}
             </div>
           </div>
 
