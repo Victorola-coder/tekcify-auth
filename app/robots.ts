@@ -1,4 +1,3 @@
-
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
@@ -7,18 +6,14 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: ["/"],
-        disallow: [],
+        disallow: ["/api/", "/profile/"],
       },
       {
         userAgent: "Googlebot",
         allow: ["/"],
-        disallow: "/private/",
-      },
-      {
-        userAgent: ["Applebot", "Bingbot"],
-        disallow: ["/"],
+        disallow: ["/api/", "/profile/", "/private/"],
       },
     ],
-    sitemap: "https://sitename.host/sitemap.xml",
+    sitemap: "https://tekcify-auth.vercel.app/sitemap.xml",
   };
 }

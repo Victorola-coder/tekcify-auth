@@ -28,18 +28,30 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nextapptemplate.xyz"),
+  metadataBase: new URL("https://tekcify-auth.vercel.app"),
   icons: {
-    icon: "/icon.png",
+    icon: "/images/logo.svg",
   },
-  title: "nextjs template",
+  title: "Tekcify Auth - Next.js Authentication System",
   description:
-    "I fell in love with next.js, im trying to make a template for it also",
-  applicationName: "next Web Application",
-  authors: [{ name: "nextapp template", url: "https://domainname.host" }],
-  keywords: ["NextJs", "reactjs", "template", "typescript"],
-  creator: "VickyJay",
-  publisher: "VickyJay",
+    "A modern, full-stack authentication system built with Next.js 15, TypeScript, and Tekcify OAuth. Features a beautiful minimalist UI with secure authentication flow.",
+  applicationName: "Tekcify Auth",
+  authors: [
+    {
+      name: "Tekcify Auth",
+      url: "https://github.com/your-username/tekcify-auth",
+    },
+  ],
+  keywords: [
+    "Next.js",
+    "TypeScript",
+    "Authentication",
+    "OAuth",
+    "Tekcify",
+    "React",
+  ],
+  creator: "Tekcify Auth Team",
+  publisher: "Tekcify Auth",
   generator: "Next.js",
   referrer: "origin",
   robots: {
@@ -48,41 +60,38 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    url: "https://domainname.host",
-    title: "Nextjs template",
-    siteName: "nextapp template",
+    url: "https://tekcify-auth.vercel.app",
+    title: "Tekcify Auth - Next.js Authentication System",
+    siteName: "Tekcify Auth",
     locale: "en_US",
     images: [
       {
-        url: "linktoopengraphimage.cdn",
+        url: "/images/logo.svg",
         width: 1200,
         height: 630,
-        alt: "next OG Image",
+        alt: "Tekcify Auth - Authentication System",
       },
     ],
   },
   twitter: {
-    site: "nextapp",
-    creator: "socialmediahandle",
-    title:
-      "nextapp template - I fell in love with next.js, im trying to make a template for it tooo",
-    description:
-      "I fell in love with next.js, im trying to make a template for it too",
+    site: "tekcify_auth",
+    creator: "tekcify_auth",
+    title: "Tekcify Auth - Next.js Authentication System",
+    description: "Modern authentication system with Tekcify OAuth integration",
     card: "summary_large_image",
-    images: ["linktoopengraph.com"],
+    images: ["/images/logo.svg"],
   },
   appleWebApp: {
     capable: true,
-    title: "nextapp template",
+    title: "Tekcify Auth",
     statusBarStyle: "black-translucent",
   },
   formatDetection: {
     telephone: false,
   },
-  abstract:
-    "I fell in love with next.js, im trying to make a template for it tooo",
-  category: "Social",
-  classification: "Social",
+  abstract: "Modern authentication system with Tekcify OAuth integration",
+  category: "Authentication",
+  classification: "Authentication",
 };
 
 export default function RootLayout({
@@ -97,9 +106,7 @@ export default function RootLayout({
       >
         <Toaster richColors />
         <AOS />
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
